@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Funciones Lineales</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      background: #2196f3;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    main {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input[type="number"] {
+      width: 80px;
+      padding: 5px;
+      margin-left: 10px;
+    }
+    canvas {
+      margin-top: 30px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Funciones Lineales</h1>
+  </header>
+  <main>
+    <section>
+      <h2>¿Qué es una función lineal?</h2>
+      <p>Una función lineal es una expresión matemática de la forma:</p>
+      <pre><strong>f(x) = mx + b</strong></pre>
+      <ul>
+        <li><strong>m</strong> es la pendiente (indica la inclinación de la recta).</li>
+        <li><strong>b</strong> es la intersección con el eje y (valor cuando x = 0).</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Explora una función lineal</h2>
+      <label for="pendiente">Pendiente (m): 
+        <input type="number" id="pendiente" value="1" step="0.1">
+      </label>
+      <label for="interseccion">Intersección (b): 
+        <input type="number" id="interseccion" value="0" step="0.1">
+      </label>
+      <canvas id="grafica" width="700" height="400"></canvas>
+    </section>
+  </main>
+  <footer>
+    Página educativa creada con HTML, JavaScript y Chart.js
+  </footer>
+
+  <script>
+    const ctx = document.getElementById('grafica').getContext('2d');
+
+    function generarDatos(m, b) {
+      const x = [];
+      const y = [];
+      for (let i = -10; i <= 10; i++) {
+        x.push(i);
+        y.push(m * i + b);
+      }
+      return { x, y };
+    }
+
+    let m = parseFloat(document.getElementById('pendiente').value);
+    let b = parseFloat(document.getElementById('interseccion').value);
+    let datos = generarDatos(m, b);
+
+    const grafico = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: datos.x,
+        datasets: [{
+          label: 'f(x) = mx + b',
+          data: datos.y,
+          borderColor: 'blue',
+          tension: 0.1,
+          fill: false
+        }]
+      },
+      options: {
+        scales: {
+          x: {
+            title: { display: true, text: 'x' }
+          },
+          y: {
+            title: { display: true, text: 'f(x)' }
+          }
+        }
+      }
+    });
+
+    function actualizarGrafico() {
+      m = parseFloat(document.getElementById('pendiente').value);
+      b = parseFloat(document.getElementById('interseccion').value);
+      const nuevosDatos = generarDatos(m, b);
+      grafico.data.labels = nuevosDatos.x;
+      grafico.data.datasets[0].data = nuevosDatos.y;
+      grafico.update();
+    }
+
+    document.getElementById('pendiente').addEventListener('input', actualizarGrafico);
+    document.getElementById('interseccion').addEventListener('input', actualizarGrafico);
+  </script>
+</body>
+</html>
+<h2> Roxxana Sonay Montoya Peña 2A TLC</h2>
+<h2>CARPETA DE DRIVE</h2>
+<li><a href="https://drive.google.com/drive/folders/1O3ouEOSRgIulYn_FV-v9fT3_13VxiuCH?usp=drive_link">CARPETA DE DRIVE</a></li>
